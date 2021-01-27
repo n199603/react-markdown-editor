@@ -26,5 +26,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
     publicPath: 'dist/',
+  },
+  // webpack-dev-server
+  devServer: {
+    // ファイル更新でブラウザに自動反映
+    hot: true,
+    // 起動時にブラウザで開く
+    open: true,
   }
 }
