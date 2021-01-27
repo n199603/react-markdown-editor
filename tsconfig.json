@@ -5,6 +5,7 @@
     // 出力先
     "outDir": "./dist/",
     // 出力対象のバージョン
-    "target": "ES2015"
+    "target": "ES2015",
+    "jsx": "react"
   }
 }
