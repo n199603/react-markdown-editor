@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    // モジュールの解決方法
+    "moduleResolution": "node",
+    // 出力先
+    "outDir": "./dist/",
+    // 出力対象のバージョン
+    "target": "ES2015"
+  }
+}
