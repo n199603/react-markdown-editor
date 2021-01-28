@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useStateWithStorage } from '../hooks/use_state_with_storage'
 
 // useStateをReactから取り出す
-const { useState } = React
+// const { useState } = React
 
 // localStorage でデータの参照・保存に使用するキー名
 const StorageKey = 'pages/editor:text'
