@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { useStateWithStorage } from '../hooks/use_state_with_storage'
+import * as ReactMarkdown from 'react-markdown'
 
 // useStateをReactから取り出す
 // const { useState } = React
@@ -87,7 +88,9 @@ export const Editor: React.FC = () => {
           // テキストの内容を渡す(useStateで管理している変数のtext)
           value = {text}
         />
-        <Preview>プレビューエリア</Preview>
+        <Preview>
+          <ReactMarkdown source={text} />
+        </Preview>
       </Wrapper>
     </>
   )
