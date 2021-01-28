@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { useStateWithStorage } from '../hooks/use_state_with_storage'
 
 // useStateをReactから取り出す
 const { useState } = React
@@ -56,7 +57,10 @@ export const Editor: React.FC = () => {
   // 状態を管理する
   // const [値, 値をセットする関数] = useState<扱う状態の型(ジェネリクス)>(初期値)
   // useStateの初期値にlocalStorageから取得した値をセット(初回はnullを返す)
-  const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
+  // const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
+
+  // カスタムフックに書き換え
+  const [text, setText] = useStateWithStorage("", StorageKey)
   
   return (
     // <React.Fragment>を省略
@@ -68,15 +72,18 @@ export const Editor: React.FC = () => {
       </Header>
       <Wrapper>
         <TextArea
-          // テキストの内容が変更された時に実行される関数を渡す
-          // eventを引数として渡す
-          onChange = {(event) => {
-            // event.target.valueにテキストの内容を格納
-            const changedText = event.target.value
-            // 変更内容をlocalStorageへ保存
-            localStorage.setItem(StorageKey, changedText)
-            setText(changedText)
-          }}
+          // // テキストの内容が変更された時に実行される関数を渡す
+          // // eventを引数として渡す
+          // onChange = {(event) => {
+          //   // event.target.valueにテキストの内容を格納
+          //   const changedText = event.target.value
+          //   // 変更内容をlocalStorageへ保存
+          //   localStorage.setItem(StorageKey, changedText)
+          //   setText(changedText)
+          // }}
+
+          // カスタムフックに書き換えにより変更
+          onChange = {(event) => setText(event.target.value)}
           // テキストの内容を渡す(useStateで管理している変数のtext)
           value = {text}
         />
