@@ -4,6 +4,10 @@ import styled from 'styled-components'
 // useStateをReactから取り出す
 const { useState } = React
 
+// localStorage でデータの参照・保存に使用するキー名
+const StorageKey = 'pages/editor:text'
+
+// スタイル
 const Header = styled.header`
   font-size: 1.5rem;
   height: 2rem;
@@ -51,7 +55,8 @@ const Preview = styled.div`
 export const Editor: React.FC = () => {
   // 状態を管理する
   // const [値, 値をセットする関数] = useState<扱う状態の型(ジェネリクス)>(初期値)
-  const [text, setText] = useState<string>('')
+  // useStateの初期値にlocalStorageから取得した値をセット(初回はnullを返す)
+  const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
   
   return (
     // <React.Fragment>を省略
@@ -65,9 +70,12 @@ export const Editor: React.FC = () => {
         <TextArea
           // テキストの内容が変更された時に実行される関数を渡す
           // eventを引数として渡す
-          // event.target.valueにテキストの内容を格納
           onChange = {(event) => {
-            setText(event.target.value)
+            // event.target.valueにテキストの内容を格納
+            const changedText = event.target.value
+            // 変更内容をlocalStorageへ保存
+            localStorage.setItem(StorageKey, changedText)
+            setText(changedText)
           }}
           // テキストの内容を渡す(useStateで管理している変数のtext)
           value = {text}
