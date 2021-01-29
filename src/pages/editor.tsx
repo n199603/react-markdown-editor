@@ -2,6 +2,8 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { useStateWithStorage } from '../hooks/use_state_with_storage'
 import * as ReactMarkdown from 'react-markdown'
+import { putMemo } from '../indexeddb/memos'
+import { Button } from '../components/button.tsx';
 
 // useStateをReactから取り出す
 // const { useState } = React
@@ -11,14 +13,23 @@ const StorageKey = 'pages/editor:text'
 
 // スタイル
 const Header = styled.header`
+  align-content: center;
+  display: flex;
   font-size: 1.5rem;
   height: 2rem;
+  justify-content: space-between;
   left: 0;
   line-height: 2rem;
   padding: 0.5rem 1rem;
   position: fixed;
   right: 0;
   top: 0;
+`
+
+const HeaderControl = styled.div`
+  height: 2rem;
+  display: flex;
+  align-content: center;
 `
 
 const Wrapper = styled.div`
@@ -62,6 +73,10 @@ export const Editor: React.FC = () => {
 
   // カスタムフックに書き換え
   const [text, setText] = useStateWithStorage("", StorageKey)
+
+  const saveMemo = (): void => {
+    putMemo('TITLE', text)
+  }
   
   return (
     // <React.Fragment>を省略
@@ -70,6 +85,11 @@ export const Editor: React.FC = () => {
     <>
       <Header>
         Markdown Editor
+        <HeaderControl>
+          <Button onClick={ saveMemo }>
+            保存する
+          </Button>
+        </HeaderControl>
       </Header>
       <Wrapper>
         <TextArea
