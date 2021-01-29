@@ -4,9 +4,10 @@ import { useStateWithStorage } from '../hooks/use_state_with_storage'
 import * as ReactMarkdown from 'react-markdown'
 import { putMemo } from '../indexeddb/memos'
 import { Button } from '../components/button.tsx';
+import { SaveModal } from '../components/save_modal.tsx'
 
 // useStateをReactから取り出す
-// const { useState } = React
+const { useState } = React
 
 // localStorage でデータの参照・保存に使用するキー名
 const StorageKey = 'pages/editor:text'
@@ -72,11 +73,10 @@ export const Editor: React.FC = () => {
   // const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
 
   // カスタムフックに書き換え
-  const [text, setText] = useStateWithStorage("", StorageKey)
+  const [text, setText] = useStateWithStorage('', StorageKey)
 
-  const saveMemo = (): void => {
-    putMemo('TITLE', text)
-  }
+  // 初期状態ではモーデルを表示しない
+  const [showModal, setShowModal] = useState(false)
   
   return (
     // <React.Fragment>を省略
@@ -86,7 +86,7 @@ export const Editor: React.FC = () => {
       <Header>
         Markdown Editor
         <HeaderControl>
-          <Button onClick={ saveMemo }>
+          <Button onClick={() => setShowModal(true)}>
             保存する
           </Button>
         </HeaderControl>
@@ -112,6 +112,15 @@ export const Editor: React.FC = () => {
           <ReactMarkdown source={text} />
         </Preview>
       </Wrapper>
+      {showModal && (
+        <SaveModal
+          onSave = {(title: string): void => {
+            putMemo(title, text)
+            setShowModal(false)
+          }}
+          onCancel = {() => setShowModal(false)}
+        />
+      )}
     </>
   )
 }

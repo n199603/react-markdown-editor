@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { Button } from './button'
+import { Button } from './button.tsx'
 
 const { useState } = React
 
@@ -40,10 +40,10 @@ interface Props {
 }
 
 export const SaveModal: React.FC<Props> = props => {
-  const {onCancel, onSave } = props
+  const { onCancel, onSave } = props
 
   // タイトルの状態(デフォルトは現在日時)
-  const [title, setTitle] = useState(new Date().toISOString)
+  const [title, setTitle] = useState(new Date().toISOString())
 
   return (
     <Wrapper>
