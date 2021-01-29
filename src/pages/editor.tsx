@@ -5,6 +5,7 @@ import * as ReactMarkdown from 'react-markdown'
 import { putMemo } from '../indexeddb/memos'
 import { Button } from '../components/button.tsx';
 import { SaveModal } from '../components/save_modal.tsx'
+import { Link } from 'react-router-dom';
 
 // useStateをReactから取り出す
 const { useState } = React
@@ -87,8 +88,11 @@ export const Editor: React.FC = () => {
         Markdown Editor
         <HeaderControl>
           <Button onClick={() => setShowModal(true)}>
-            保存する
+            Save
           </Button>
+          <Link to = "/history">
+            History
+          </Link>
         </HeaderControl>
       </Header>
       <Wrapper>
